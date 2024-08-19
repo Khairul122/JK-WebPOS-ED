@@ -92,7 +92,7 @@ CREATE TABLE `tbl_pengaturan` (
 --
 
 INSERT INTO `tbl_pengaturan` (`pengaturan_id`, `pengaturan_nama_sidebar`, `pengaturan_nama_navbar`, `pengaturan_alamat`, `pengaturan_no_hp`) VALUES
-(7, 'POS', 'Minimarket Sehati Mart \n', 'Alamat: Pasar Baru,Kec Bayang, Kab pesisir selatan\n', '082284858396');
+(7, 'POS', 'Minimarket Sehati Mart \n', 'Alamat: Pasar Baru,Kec Bayang, Kab Pasar Baru\n', '082284858396');
 
 -- --------------------------------------------------------
 

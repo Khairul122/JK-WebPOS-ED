@@ -22,7 +22,7 @@ $pengguna = mysqli_fetch_assoc(mysqli_query($config, "SELECT * FROM tbl_pengguna
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>POS - Toko Mitra</title>
+    <title>Minimarkert Sehati</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

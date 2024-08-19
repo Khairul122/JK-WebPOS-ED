@@ -31,7 +31,7 @@ $pengguna_id = $row1["pengguna_id"];
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>POS - Toko Mitra</title>
+    <title>Minimarkert Sehati</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

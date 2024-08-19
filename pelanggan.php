@@ -26,7 +26,7 @@ $pengguna = mysqli_fetch_assoc($dataPengguna);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>POS - Toko Mitra</title>
+    <title>Minimarkert Sehati</title>
 
     <!-- Custom fonts and styles -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

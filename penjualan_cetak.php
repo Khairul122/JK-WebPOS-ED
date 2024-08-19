@@ -43,7 +43,7 @@ $pengguna_pilihan = $pengguna["pengguna_pilihan"];
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>POS - Toko Mitra</title>
+    <title>Minimarkert Sehati</title>
 
     <!-- Custom fonts and styles -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -80,7 +80,7 @@ $pengguna_pilihan = $pengguna["pengguna_pilihan"];
                 <center>
                     <div class="header">
                         <h1>Minimarket Sehati Mart</h1>
-                        <p>Alamat: Pasar Baru, Kec Bayang, Kab Pesisir Selatan</p>
+                        <p>Alamat: Pasar Baru, Kec Bayang, Kab Pasar Baru</p>
                         <p>No Hp: 082284853896</p>
                         <h3>Nota Transaksi</h3>
                     </div>

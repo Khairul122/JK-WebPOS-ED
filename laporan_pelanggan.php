@@ -37,7 +37,7 @@ $row1 = mysqli_fetch_array($data2); {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>POS - Toko Mitra</title>
+    <title>Minimarkert Sehati</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -80,7 +80,7 @@ $row1 = mysqli_fetch_array($data2); {
                                 <th>No</th>
                                 <th>Id Pelanggan</th>
                                 <th>Nama Pelanggan</th>
-                                <th>Alamat Pelanggan</th>
+                               
                                 <th>No HP / Telp Pelanggan</th>
                             </tr>
                             <?php
@@ -89,7 +89,7 @@ $row1 = mysqli_fetch_array($data2); {
                             while ($row3 = mysqli_fetch_array($data3)) {
                                 $pelanggan_id = $row3["pelanggan_id"];
                                 $pelanggan_nama    = $row3["pelanggan_nama"];
-                                $pelanggan_alamat = $row3["pelanggan_alamat"];
+                             
                                 $pelanggan_no_hp = $row3["pelanggan_no_hp"];
                                 echo
                                 "
@@ -97,7 +97,7 @@ $row1 = mysqli_fetch_array($data2); {
                                                 <td>$no</td>
                                                 <td>$pelanggan_id</td>
                                                 <td>$pelanggan_nama</td>
-                                                <td>$pelanggan_alamat</td>
+                                                
                                                 <td>$pelanggan_no_hp</td>
                                             </tr>
                                             ";
@@ -115,7 +115,7 @@ $row1 = mysqli_fetch_array($data2); {
                     <tr>
                         <td style="width: 80%;"></td>
                         <td>
-                            Solok, <?= $tgl ?>
+                            Pasar Baru, <?= $tgl ?>
                             <br>
                             <br>
                             <br>

@@ -36,7 +36,7 @@ $row1 = mysqli_fetch_array($data2); {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>POS - Toko Mitra</title>
+    <title>Minimarkert Sehati</title>
 
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
