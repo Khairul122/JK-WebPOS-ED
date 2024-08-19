@@ -153,9 +153,7 @@ $pengguna = mysqli_fetch_assoc($pengguna_query);
                         <div class="col-lg-1 pr-1">
                             <a href="penjualan_insert.php" class="btn btn-success btn-block">+ Insert</a>
                         </div>
-                        <div class="col-lg-1 px-1">
-                            <a href="laporan_penjualan.php" class="btn btn-warning btn-block">Cetak</a>
-                        </div>
+                        
                         <div class="col-lg-1 px-1">
                             <a href="penjualan_hapus.php" class="btn btn-primary btn-user btn-block">Hapus</a>
                         </div>

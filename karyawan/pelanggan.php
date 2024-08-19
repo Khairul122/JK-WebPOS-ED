@@ -233,7 +233,7 @@ $row1 = mysqli_fetch_array($data2); {
                                             <th>No</th>
                                             <th>Id Pelanggan</th>
                                             <th>Nama Pelanggan</th>
-                                            <th>Alamat Pelanggan</th>
+                                           
                                             <th>No HP / Telp Pelanggan</th>
                                         </tr>
                                         <?php
@@ -242,7 +242,7 @@ $row1 = mysqli_fetch_array($data2); {
                                         while ($row3 = mysqli_fetch_array($data3)) {
                                             $pelanggan_id = $row3["pelanggan_id"];
                                             $pelanggan_nama    = $row3["pelanggan_nama"];
-                                            $pelanggan_alamat = $row3["pelanggan_alamat"];
+                                   
                                             $pelanggan_no_hp = $row3["pelanggan_no_hp"];
                                             echo
                                             "
@@ -250,7 +250,7 @@ $row1 = mysqli_fetch_array($data2); {
                                                 <td>$no</td>
                                                 <td>$pelanggan_id</td>
                                                 <td>$pelanggan_nama</td>
-                                                <td>$pelanggan_alamat</td>
+                                              
                                                 <td>$pelanggan_no_hp</td>
                                             </tr>
                                             ";
