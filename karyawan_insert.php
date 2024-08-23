@@ -74,7 +74,7 @@ $pengguna_pilihan = $row1["pengguna_pilihan"];
                         <a class="collapse-item" href="kategori.php">Data Kategori</a>
                         <a class="collapse-item" href="produk.php">Data Produk</a>
                         <a class="collapse-item" href="pelanggan.php">Data Pelanggan</a>
-                        <a class="collapse-item" href="karyawan.php">Data Karyawan</a>
+                        <a class="collapse-item" href="karyawan.php">Data Pengguna</a>
                     </div>
                 </div>
             </li>
@@ -112,7 +112,7 @@ $pengguna_pilihan = $row1["pengguna_pilihan"];
                         <a class="collapse-item" href="laporan_pelanggan.php">Laporan Pelanggan</a>
                         <a class="collapse-item" href="laporan_penjualan.php">Laporan Penjualan</a>
                         <a class="collapse-item" href="laporan_transaksi.php">Laporan Transaksi</a>
-                        <a class="collapse-item" href="laporan_karyawan.php">Laporan Karyawan</a>
+                        <a class="collapse-item" href="laporan_karyawan.php">Laporan Pengguna</a>
                     </div>
                 </div>
             </li>
@@ -184,7 +184,7 @@ $pengguna_pilihan = $row1["pengguna_pilihan"];
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between">
-                        <h1 class="h3 mb-4 text-black">+ Karyawan Insert</h1>
+                        <h1 class="h3 mb-4 text-black">+ Pengguna Insert</h1>
                     </div>
                     <form action="" method="post">
                         <div class="row">

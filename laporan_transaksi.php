@@ -190,11 +190,11 @@ $pengguna = mysqli_fetch_assoc(mysqli_query($config, "SELECT * FROM tbl_pengguna
                                 </div>
                             </div>
                             <div class="col-4">
-    <div class="form-group">
-        <label>Pilih Tanggal</label>
-        <input type="date" name="tanggal_pilih" class="form-control" value="<?= date('Y-m-d') ?>">
-    </div>
-</div>
+                                <div class="form-group">
+                                    <label>Pilih Tanggal</label>
+                                    <input type="date" name="tanggal_pilih" class="form-control" value="<?= date('Y-m-d') ?>">
+                                </div>
+                            </div>
 
                             <div class="col-3 px-0">
                                 <div class="form-group">

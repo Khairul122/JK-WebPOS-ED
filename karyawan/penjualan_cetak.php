@@ -79,7 +79,9 @@ $row1 = mysqli_fetch_array($data2); {
                 <br>
                 <?php
                 $transaksi_id = $_GET['transaksi_id'];
-                $query = "SELECT transaksi_id, tgl_wktu_transaksi, pelanggan_id, SUM(jumlah_item) AS jumlah_item, SUM(total_harga) AS total_harga, pengguna
+
+                // Query untuk menghitung jumlah item dan kuantitas total
+                $query = "SELECT transaksi_id, tgl_wktu_transaksi, pelanggan_id, COUNT(*) AS total_item, SUM(jumlah_item) AS total_qty, SUM(total_harga) AS total_harga, pengguna, MAX(diskon) as diskon, MAX(kembalian) as kembalian
                 FROM tbl_transaksi 
                 WHERE transaksi_id='$transaksi_id'
                 GROUP BY transaksi_id, tgl_wktu_transaksi, pelanggan_id, pengguna";
@@ -92,10 +94,22 @@ $row1 = mysqli_fetch_array($data2); {
 
                 $tgl_wktu_transaksi = $transaksi["tgl_wktu_transaksi"];
                 $pelanggan_id = $transaksi["pelanggan_id"];
-                $jumlah_item = $transaksi["jumlah_item"];
-                $total_harga = number_format($transaksi["total_harga"], 0);
+                $total_item = $transaksi["total_item"]; // Menghitung jumlah item (total baris)
+                $total_qty = $transaksi["total_qty"]; // Jumlah total item
+                $total_harga = $transaksi["total_harga"];
                 $pengguna = $transaksi["pengguna"];
+                $diskon = $transaksi["diskon"]; // Mengambil nilai diskon
+                $kembalian = $transaksi["kembalian"]; // Mengambil nilai kembalian
 
+                // Ambil nilai total_bayar dari database
+                $query = "SELECT total_bayar FROM tbl_transaksi WHERE transaksi_id='$transaksi_id' LIMIT 1";
+                $result = mysqli_query($config, $query);
+                if (!$result) {
+                    die("Query error: " . mysqli_error($config));
+                }
+                $total_bayar = mysqli_fetch_array($result)["total_bayar"];
+
+                // Ambil data pelanggan
                 $query = "SELECT * FROM tbl_pelanggan WHERE pelanggan_id='$pelanggan_id'";
                 $result = mysqli_query($config, $query);
                 if (!$result) {
@@ -104,7 +118,7 @@ $row1 = mysqli_fetch_array($data2); {
                 $pelanggan = mysqli_fetch_array($result);
 
                 $pelanggan_nama = $pelanggan["pelanggan_nama"];
-                $pelanggan_alamat = $pelanggan["pelanggan_alamat"];
+          
                 $pelanggan_no_hp = $pelanggan["pelanggan_no_hp"];
                 ?>
                 <h6>Nota : <?= htmlspecialchars($transaksi_id) ?> </h6>
@@ -115,20 +129,19 @@ $row1 = mysqli_fetch_array($data2); {
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table" width="100%" cellspacing="0">
-                            <thead>
+                            <!-- <thead>
                                 <tr>
-                                    <!-- <th>No</th>
+                                    <th>No</th>
                                     <th>Nama Produk</th>
                                     <th>Harga</th>
                                     <th></th>
                                     <th>Jumlah Item</th>
                                     <th>Total Harga</th>
-                                </tr> -->
-                            </thead>
+                                </tr>
+                            </thead> -->
                             <tbody>
                                 <?php
                                 $no = 1;
-                                $total_items = 0;  // Inisialisasi total item
                                 $query = "SELECT * FROM tbl_transaksi WHERE transaksi_id='$transaksi_id'";
                                 $result = mysqli_query($config, $query);
                                 if (!$result) {
@@ -139,7 +152,6 @@ $row1 = mysqli_fetch_array($data2); {
                                     $produk_id = $item["produk_id"];
                                     $jumlah_item = $item["jumlah_item"];
                                     $total_harga_item = number_format($item["total_harga"], 0);
-                                    $total_items += $jumlah_item;
                                     $query = "SELECT * FROM tbl_produk WHERE produk_id='$produk_id'";
                                     $result_produk = mysqli_query($config, $query);
                                     if (!$result_produk) {
@@ -174,35 +186,52 @@ $row1 = mysqli_fetch_array($data2); {
                                 ?>
                                 <tr>
                                     <td colspan='6' align='right'>Total Item :</td>
-                                    <td><?= $total_items ?></td>
+                                    <td><?= $total_item ?></td> <!-- Jumlah baris item -->
                                 </tr>
-
+                                <tr>
+                                    <td colspan='6' align='right'>Qty :</td>
+                                    <td><?= $total_qty ?></td> <!-- Jumlah total item -->
+                                </tr>
+                                <tr>
+                                    <td colspan='6' align='right'>Total Bayar :</td>
+                                    <td>Rp. <?= number_format($total_bayar, 0) ?></td>
+                                </tr>
+                                <tr>
+                                    <td colspan='6' align='right'>Diskon :</td>
+                                    <td>Rp. <?= number_format($diskon, 0) ?></td> <!-- Menampilkan diskon -->
+                                </tr>
                                 <tr>
                                     <td colspan='6' align='right'>Grand Total :</td>
                                     <td>Rp. <?= $total_harga_semua ?></td>
                                 </tr>
                                 <tr>
-                                    <td colspan='6' align='right'>Tanggal Transaksi :</td>
-                                    <td><?= date("Y-m-d") ?></td> <!-- Tanggal dan waktu saat ini -->
+                                    <td colspan='6' align='right'>Metode Pembayaran :</td>
+                                    <td>Cash</td>
                                 </tr>
                                 <tr>
-                                    <td colspan='6' align='right'>Nama Kasir :</td>
-                                    <td><?= htmlspecialchars($pengguna) ?></td> <!-- Nama pengguna (kasir) -->
+                                    <td colspan='6' align='right'>Kembalian :</td>
+                                    <td>Rp. <?= number_format($kembalian, 0) ?></td> <!-- Menampilkan kembalian langsung dari database -->
                                 </tr>
+                                <<tr>
+                                    <td colspan='6' align='right'>Tanggal Transaksi :</td>
+                                    <td><?= strftime("%d %B %Y", strtotime($tgl_wktu_transaksi)) ?></td> <!-- Tanggal dalam format 12 Januari 2024 -->
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan='6' align='right'>Nama Kasir :</td>
+                                        <td><?= htmlspecialchars($pengguna) ?> </td>
+                                    </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <br>
-        <br>
         <div style="text-align: center; margin-top: 60px;">
             <p><strong>Terimakasih</strong></p>
             <p>telah berbelanja di Minimarket Sehati Mart</p>
             <p>Silakan cek kembali belanjaan anda</p>
         </div>
-
     </div>
 
     <!-- Bootstrap and plugins -->
@@ -213,54 +242,3 @@ $row1 = mysqli_fetch_array($data2); {
 </body>
 
 </html>
-
-<?php
-// Handling the form submissions
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["submit_ip"])) {
-        $produk_id = $_POST["produk_id"];
-        $jumlah_item = $_POST["jumlah_item"];
-
-        $query = "SELECT * FROM tbl_produk WHERE produk_id='$produk_id'";
-        $result = mysqli_query($config, $query);
-        if (!$result) {
-            die("Query error: " . mysqli_error($config));
-        }
-        $produk = mysqli_fetch_array($result);
-
-        $produk_stok = $produk["produk_stok"] - $jumlah_item;
-        $produk_harga_jual = $produk["produk_harga_jual"] * $jumlah_item;
-
-        mysqli_query($config, "INSERT INTO tbl_keranjang (produk_id, jumlah_item, total_harga) VALUES ('$produk_id', '$jumlah_item', '$produk_harga_jual')");
-        mysqli_query($config, "UPDATE tbl_produk SET produk_stok='$produk_stok' WHERE produk_id='$produk_id'");
-
-        echo '<script>alert("Keranjang Inserted");window.location="transaksi_insert.php"</script>';
-    }
-
-    if (isset($_POST["submit_it"])) {
-        $transaksi_id = $_POST["transaksi_id"];
-        $tgl_wktu_transaksi = date("d-m-Y H:i:s");
-        $pelanggan_id = $_POST["pelanggan_id"];
-
-        $query = "SELECT * FROM tbl_keranjang";
-        $result = mysqli_query($config, $query);
-        if (!$result) {
-            die("Query error: " . mysqli_error($config));
-        }
-
-        while ($keranjang = mysqli_fetch_array($result)) {
-            $keranjang_id = $keranjang["keranjang_id"];
-            $produk_id = $keranjang["produk_id"];
-            $jumlah_item = $keranjang["jumlah_item"];
-            $total_harga = $keranjang["total_harga"];
-
-            mysqli_query($config, "INSERT INTO tbl_transaksi (keranjang_id, transaksi_id, tgl_wktu_transaksi, pelanggan_id, produk_id, jumlah_item, total_harga) 
-                                   VALUES ('$keranjang_id', '$transaksi_id', '$tgl_wktu_transaksi', '$pelanggan_id', '$produk_id', '$jumlah_item', '$total_harga')");
-        }
-
-        mysqli_query($config, "DELETE FROM tbl_keranjang");
-        echo '<script>alert("Transaksi Inserted");window.location="penjualan.php"</script>';
-    }
-}
-
-?>

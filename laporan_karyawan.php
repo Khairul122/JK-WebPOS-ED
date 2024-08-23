@@ -72,7 +72,7 @@ $row1 = mysqli_fetch_array($data2); {
                     HP : <?= $pengaturan_no_hp ?>
                 </h6>
                 <hr>
-                <h5 class="text-center mb-3">Laporan Karyawan</h5>
+                <h5 class="text-center mb-3">Laporan Pengguna</h5>
                 <div class="table-responsive">
                     <table class="table table-bordered" width="100%" cellspacing="0">
                         <thead>

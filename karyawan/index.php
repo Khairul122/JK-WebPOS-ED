@@ -126,7 +126,7 @@ $row1 = mysqli_fetch_array($data2); {
                         <a class="collapse-item" href="laporan_produk.php">Laporan Produk</a>
                         <a class="collapse-item" href="laporan_pelanggan.php">Laporan Pelanggan</a>
                         <a class="collapse-item" href="laporan_penjualan.php">Laporan Penjualan</a>
-                        <a class="collapse-item" href="laporan_transaksi.php">Laporan Transaksi</a>
+                        <a class="collapse-item" href="Laporan_transaksi.php">Laporan Transaksi</a>
                     </div>
                 </div>
             </li>

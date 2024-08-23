@@ -69,32 +69,32 @@ $pengguna = mysqli_fetch_array(mysqli_query($config, "SELECT * FROM tbl_pengguna
                         </thead>
                         <tbody>';
 
-                $no = 1;
-                $query_barang = mysqli_query($config, "SELECT DISTINCT produk_id, produk_nama FROM tbl_produk");
-                if (!$query_barang) {
-                    die("Query Error: " . mysqli_error($config));
-                }
-
-                while ($row_barang = mysqli_fetch_array($query_barang)) {
-                    $produk_id = $row_barang['produk_id'];
-                    $nama_barang = $row_barang['produk_nama'];
-                    echo "<tr>
-                            <td>{$no}</td>
-                            <td>{$produk_id}</td>
-                            <td>{$nama_barang}</td>";
-
-                    $total_barang = 0;
-                    foreach ($bulan as $key => $value) {
-                        $data_bulan = mysqli_fetch_array(mysqli_query($config, "SELECT SUM(jumlah_item) AS jumlah_item FROM tbl_transaksi WHERE produk_id = '$produk_id' AND MONTH(tgl_wktu_transaksi) = '$key' AND YEAR(tgl_wktu_transaksi) = '$tahun_pilih'"));
-                        $jumlah_item = $data_bulan['jumlah_item'] ? $data_bulan['jumlah_item'] : 0;
-                        echo "<td>{$jumlah_item}</td>";
-                        $total_barang += $jumlah_item;
-                    }
-
-                    echo "<td>{$total_barang}</td>";
-                    echo "</tr>";
-                    $no++;
-                }
+                        $no = 1;
+                        $query_barang = mysqli_query($config, "SELECT DISTINCT produk_id, produk_nama FROM tbl_produk");
+                        if (!$query_barang) {
+                            die("Query Error: " . mysqli_error($config));
+                        }
+                        
+                        while ($row_barang = mysqli_fetch_array($query_barang)) {
+                            $produk_id = $row_barang['produk_id'];
+                            $nama_barang = $row_barang['produk_nama'];
+                            echo "<tr>
+                                    <td>{$no}</td>
+                                    <td>{$produk_id}</td>
+                                    <td>{$nama_barang}</td>";
+                        
+                            $total_barang = 0;
+                            foreach ($bulan as $key => $value) {
+                                $data_bulan = mysqli_fetch_array(mysqli_query($config, "SELECT SUM(total_harga) AS total_harga FROM tbl_transaksi WHERE produk_id = '$produk_id' AND MONTH(tgl_wktu_transaksi) = '$key' AND YEAR(tgl_wktu_transaksi) = '$tahun_pilih'"));
+                                $total_harga = $data_bulan['total_harga'] ? $data_bulan['total_harga'] : 0;
+                                echo "<td>{$total_harga}</td>";
+                                $total_barang += $total_harga;
+                            }
+                        
+                            echo "<td>{$total_barang}</td>";
+                            echo "</tr>";
+                            $no++;
+                        }
 
                 echo '</tbody>
                     </table>

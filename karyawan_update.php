@@ -86,7 +86,7 @@ $row1 = mysqli_fetch_array($data2); {
                          <!-- <a class="collapse-item" href="supplier.php">Data Supplier</a> -->
                         <a class="collapse-item" href="produk.php">Data Produk</a>
                         <a class="collapse-item" href="pelanggan.php">Data Pelanggan</a>
-                        <a class="collapse-item" href="karyawan.php">Data Karyawan</a>
+                        <a class="collapse-item" href="karyawan.php">Data Pengguna</a>
                     </div>
                 </div>
             </li>
@@ -130,7 +130,7 @@ $row1 = mysqli_fetch_array($data2); {
                         <a class="collapse-item" href="laporan_pelanggan.php">Laporan Pelanggan</a>
                         <a class="collapse-item" href="laporan_penjualan.php">Laporan Penjualan</a>
                         <a class="collapse-item" href="laporan_transaksi.php">Laporan Transaksi</a>
-                        <a class="collapse-item" href="laporan_karyawan.php">Laporan Karyawan</a>
+                        <a class="collapse-item" href="laporan_karyawan.php">Laporan Pengguna</a>
                     </div>
                 </div>
             </li>
@@ -244,7 +244,7 @@ $row1 = mysqli_fetch_array($data2); {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between">
-                        <h1 class="h3 mb-4 text-black">+ Karyawan Update</h1>
+                        <h1 class="h3 mb-4 text-black">+ Pengguna Update</h1>
                     </div>
                     <?php
                     $no = 1;

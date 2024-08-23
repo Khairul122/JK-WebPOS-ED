@@ -74,7 +74,7 @@ $pengguna_pilihan = $row1["pengguna_pilihan"];
                         <a class="collapse-item" href="kategori.php">Data Kategori</a>
                         <a class="collapse-item" href="produk.php">Data Produk</a>
                         <a class="collapse-item" href="pelanggan.php">Data Pelanggan</a>
-                        <a class="collapse-item" href="karyawan.php">Data Karyawan</a>
+                        <a class="collapse-item" href="karyawan.php">Data Pengguna</a>
                     </div>
                 </div>
             </li>
@@ -116,7 +116,7 @@ $pengguna_pilihan = $row1["pengguna_pilihan"];
                         <a class="collapse-item" href="laporan_pelanggan.php">Laporan Pelanggan</a>
                         <a class="collapse-item" href="laporan_penjualan.php">Laporan Penjualan</a>
                         <a class="collapse-item" href="laporan_transaksi.php">Laporan Transaksi</a>
-                        <a class="collapse-item" href="laporan_karyawan.php">Laporan Karyawan</a>
+                        <a class="collapse-item" href="laporan_karyawan.php">Laporan Pengguna</a>
                     </div>
                 </div>
             </li>
@@ -208,7 +208,7 @@ $pengguna_pilihan = $row1["pengguna_pilihan"];
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h4 class="m-0 font-weight-bold text-primary">Data Karyawan</h4>
+                            <h4 class="m-0 font-weight-bold text-primary">Data Pengguna</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

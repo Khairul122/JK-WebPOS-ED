@@ -128,7 +128,7 @@ $pengguna_pilihan = $pengguna["pengguna_pilihan"];
                 $pelanggan = mysqli_fetch_array($result);
 
                 $pelanggan_nama = $pelanggan["pelanggan_nama"];
-                $pelanggan_alamat = $pelanggan["pelanggan_alamat"];
+              
                 $pelanggan_no_hp = $pelanggan["pelanggan_no_hp"];
                 ?>
                 <h6>Nota : <?= htmlspecialchars($transaksi_id) ?> </h6>

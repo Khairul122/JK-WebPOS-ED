@@ -112,7 +112,7 @@ $pengguna_id = $row1["pengguna_id"];
                         <a class="collapse-item" href="laporan_produk.php">Laporan Produk</a>
                         <a class="collapse-item" href="laporan_pelanggan.php">Laporan Pelanggan</a>
                         <a class="collapse-item" href="laporan_penjualan.php">Laporan Penjualan</a>
-                        <a class="collapse-item" href="laporan_transaksi.php">Laporan Transaksi</a>
+                        <a class="collapse-item" href="Laporan_transaksi.php">Laporan Transaksi</a>
                     </div>
                 </div>
             </li>
@@ -169,12 +169,10 @@ $pengguna_id = $row1["pengguna_id"];
                         <h1 class="h3 mb-4 text-black">+ Penjualan Insert</h1>
                     </div>
                     <?php
-                    $id = mysqli_query($config, "SELECT max(transaksi_id) as transaksi_id FROM tbl_transaksi");
-                    $data = mysqli_fetch_assoc($id);
-                    $transaksi_id = $data['transaksi_id'];
-                    $transaksi_id1 = (int)substr($transaksi_id, 6, 9);
-                    $transaksi_id1++;
-                    $transaksi_id2 = "TRNSKS" . sprintf("%09d", $transaksi_id1);
+                    $id_query = mysqli_query($config, "SELECT max(transaksi_id) as transaksi_id FROM tbl_transaksi");
+                    $data = mysqli_fetch_array($id_query);
+                    $transaksi_id1 = sprintf("%09s", substr($data['transaksi_id'], 6, 9) + 1);
+                    $transaksi_id2 = "TRNSKS" . $transaksi_id1;
                     ?>
                     <form action="" method="post">
                         <div class="row">
@@ -184,20 +182,22 @@ $pengguna_id = $row1["pengguna_id"];
                                     <input type="text" name="transaksi_id" value="<?= htmlspecialchars($transaksi_id2) ?>" readonly class="form-control">
                                 </div>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Id Pelanggan</label>
-                                    <select name="pelanggan_id" class="form-control">
-                                        <option value="-">Pilih Id Pelanggan</option>
-                                        <?php
-                                        $data4 = mysqli_query($config, "SELECT * FROM tbl_pelanggan");
-                                        while ($row4 = mysqli_fetch_assoc($data4)) {
-                                            $pelanggan_id = htmlspecialchars($row4["pelanggan_id"]);
-                                            $pelanggan_nama = htmlspecialchars($row4["pelanggan_nama"]);
-                                            echo "<option value='$pelanggan_id'>Id Pelanggan : $pelanggan_id | Nama Pelanggan: $pelanggan_nama</option>";
-                                        }
-                                        ?>
-                                    </select>
+                                    <label>No HP Pelanggan</label>
+                                    <input type="text" id="pelanggan_no_hp" name="pelanggan_no_hp" class="form-control" placeholder="Masukkan No HP">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Nama Pelanggan</label>
+                                    <input type="text" id="pelanggan_nama" name="pelanggan_nama" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Total Bayar</label>
+                                    <input type="number" name="total_bayar" class="form-control" placeholder="Masukkan jumlah yang dibayarkan">
                                 </div>
                             </div>
                             <div class="col-lg-1 pl-0">
@@ -207,25 +207,24 @@ $pengguna_id = $row1["pengguna_id"];
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Submit IP -->
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Nama Produk</label>
-                                    <select class="selectpicker form-control" name="produk_id" data-show-subtext="true" data-live-search="true">
-                                        <option value="-">Pilih Id Produk</option>
-                                        <?php
-                                        $data5 = mysqli_query($config, "SELECT * FROM tbl_produk");
-                                        while ($row5 = mysqli_fetch_assoc($data5)) {
-                                            $produk_id = htmlspecialchars($row5["produk_id"]);
-                                            $produk_nama = htmlspecialchars($row5["produk_nama"]);
-                                            $produk_merek = htmlspecialchars($row5["produk_merek"]);
-                                            $produk_stok = htmlspecialchars($row5["produk_stok"]);
-                                            $produk_harga_jual = htmlspecialchars($row5["produk_harga_jual"]);
-                                            echo "<option value='$produk_id'>Id Produk : $produk_id | Nama Produk: $produk_merek $produk_nama | Stok : $produk_stok | Harga : $produk_harga_jual</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                    <span class="help-inline"><code></code></span>
+                                    <div class="row-fluid">
+                                    <select style="background-color: black!important;" class="selectpicker form-control" name="produk_id" data-show-subtext="true" data-live-search="true">
+                                            <option value="-">Pilih Id Produk</option>
+                                            <?php
+                                            $produk_query = mysqli_query($config, "SELECT * FROM tbl_produk");
+                                            while ($produk = mysqli_fetch_array($produk_query)) {
+                                                echo "<option value='" . htmlspecialchars($produk['produk_id']) . "'>Id Produk : " . htmlspecialchars($produk['produk_id']) . " | Nama Produk: " . htmlspecialchars($produk['produk_merek']) . " " . htmlspecialchars($produk['produk_nama']) . " | Stok : " . htmlspecialchars($produk['produk_stok']) . " | Harga : " . htmlspecialchars($produk['produk_harga_jual']) . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                        <span class="help-inline"><code></code></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -242,6 +241,7 @@ $pengguna_id = $row1["pengguna_id"];
                             </div>
                         </div>
                     </form>
+
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" width="100%" cellspacing="0">
@@ -254,41 +254,35 @@ $pengguna_id = $row1["pengguna_id"];
                                         <th>Total Harga</th>
                                         <th>Aksi</th>
                                     </tr>
+                                </thead>
+                                <tbody>
                                     <?php
                                     $no = 1;
-                                    $data6 = mysqli_query($config, "SELECT * FROM tbl_keranjang");
-                                    while ($row6 = mysqli_fetch_assoc($data6)) {
-                                        $keranjang_id = htmlspecialchars($row6["keranjang_id"]);
-                                        $produk_id = htmlspecialchars($row6["produk_id"]);
-                                        $jumlah_item = htmlspecialchars($row6["jumlah_item"]);
-                                        $total_harga = htmlspecialchars($row6["total_harga"]);
-
-                                        $data7 = mysqli_query($config, "SELECT * FROM tbl_produk WHERE produk_id='$produk_id'");
-                                        $row7 = mysqli_fetch_assoc($data7);
-                                        $produk_nama = htmlspecialchars($row7["produk_nama"]);
-                                        $produk_harga_jual = htmlspecialchars($row7["produk_harga_jual"]);
-                                        echo "<tr>
-                                                <td>$no</td>
-                                                <td>$produk_nama</td>
-                                                <td>$produk_harga_jual</td>
-                                                <td>$jumlah_item</td>
-                                                <td>$total_harga</td>
+                                    $keranjang_query = mysqli_query($config, "SELECT * FROM tbl_keranjang");
+                                    while ($keranjang = mysqli_fetch_array($keranjang_query)) {
+                                        $produk_query = mysqli_query($config, "SELECT * FROM tbl_produk WHERE produk_id='" . mysqli_real_escape_string($config, $keranjang['produk_id']) . "'");
+                                        $produk_data = mysqli_fetch_array($produk_query);
+                                        echo "
+                                            <tr>
+                                                <td>{$no}</td>
+                                                <td>" . htmlspecialchars($produk_data['produk_nama']) . "</td>
+                                                <td>" . htmlspecialchars($produk_data['produk_harga_jual']) . "</td>
+                                                <td>" . htmlspecialchars($keranjang['jumlah_item']) . "</td>
+                                                <td>" . htmlspecialchars($keranjang['total_harga']) . "</td>
                                                 <td>
-                                                    <a href='keranjang_hapus.php?keranjang_id=$keranjang_id&jumlah_item=$jumlah_item&produk_id=$produk_id' class='btn btn-primary btn-user btn-block'>Hapus</a>
+                                                    <a href='keranjang_hapus.php?keranjang_id=" . urlencode($keranjang['keranjang_id']) . "&jumlah_item=" . urlencode($keranjang['jumlah_item']) . "&produk_id=" . urlencode($keranjang['produk_id']) . "' class='btn btn-primary btn-user btn-block'>Hapus</a>
                                                 </td>
                                             </tr>";
                                         $no++;
                                     }
-                                    $data6 = mysqli_query($config, "SELECT SUM(total_harga) as total_harga FROM tbl_keranjang");
-                                    $row6 = mysqli_fetch_assoc($data6);
-                                    $total_harga = htmlspecialchars($row6["total_harga"]);
-                                    echo "<tr>
+                                    $total_harga_query = mysqli_query($config, "SELECT sum(total_harga) as total_harga FROM tbl_keranjang");
+                                    $total_row = mysqli_fetch_array($total_harga_query);
+                                    echo "
+                                        <tr>
                                             <td colspan='5' align='right'>Total Harga Keseluruhan</td>
-                                            <td>$total_harga</td>
+                                            <td>" . htmlspecialchars($total_row['total_harga']) . "</td>
                                         </tr>";
                                     ?>
-                                </thead>
-                                <tbody>
                                 </tbody>
                             </table>
                         </div>
@@ -334,7 +328,29 @@ $pengguna_id = $row1["pengguna_id"];
         <script src="../js/demo/datatables-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
-
+        <script>
+        $(document).ready(function() {
+            $('#pelanggan_no_hp').on('input', function() {
+                var pelanggan_no_hp = $(this).val();
+                if (pelanggan_no_hp !== '') {
+                    $.ajax({
+                        url: "../get_pelanggan.php",
+                        method: "POST",
+                        data: { pelanggan_no_hp: pelanggan_no_hp },
+                        success: function(data) {
+                            if (data !== '') {
+                                $('#pelanggan_nama').val(data);
+                            } else {
+                                $('#pelanggan_nama').val('Pelanggan tidak ditemukan');
+                            }
+                        }
+                    });
+                } else {
+                    $('#pelanggan_nama').val('');
+                }
+            });
+        });
+    </script>
     </body>
 </html>
 
@@ -362,17 +378,42 @@ if (isset($_POST["submit_ip"])) {
 if (isset($_POST["submit_it"])) {
     $transaksi_id = mysqli_real_escape_string($config, $_POST["transaksi_id"]);
     $tgl_wktu_transaksi = date("Y-m-d H:i:s");
-    $pelanggan_id = mysqli_real_escape_string($config, $_POST["pelanggan_id"]);
+    $pelanggan_no_hp = mysqli_real_escape_string($config, $_POST["pelanggan_no_hp"]);
+    
+    // Query untuk mendapatkan ID pelanggan berdasarkan nomor HP
+    $query_pelanggan = "SELECT pelanggan_id FROM tbl_pelanggan WHERE pelanggan_no_hp='$pelanggan_no_hp' LIMIT 1";
+    $result_pelanggan = mysqli_query($config, $query_pelanggan);
+    $pelanggan_data = mysqli_fetch_assoc($result_pelanggan);
+    $pelanggan_id = $pelanggan_data['pelanggan_id'];
+    
+    $total_bayar = mysqli_real_escape_string($config, $_POST["total_bayar"]);
     $pengguna = $pengguna_nama;  // Menambahkan nilai untuk kolom pengguna
+
+    // Menghitung total harga dari keranjang
+    $total_harga_query = mysqli_query($config, "SELECT SUM(total_harga) as total_harga_sum FROM tbl_keranjang");
+    $total_harga_result = mysqli_fetch_assoc($total_harga_query);
+    $total_harga = $total_harga_result['total_harga_sum'];
+
+    // Inisialisasi diskon
+    $diskon = 0;
+
+    // Cek apakah grand total lebih dari 100,000 untuk diskon
+    if ($total_harga > 100000) {
+        $diskon = 0.1 * $total_harga; // 10% diskon
+        $total_harga -= $diskon; // Kurangi total harga dengan diskon
+    }
+
+    // Hitung kembalian
+    $kembalian = $total_bayar - $total_harga;
 
     mysqli_begin_transaction($config);
 
     try {
         $keranjang_query = mysqli_query($config, "SELECT * FROM tbl_keranjang");
         while ($keranjang = mysqli_fetch_array($keranjang_query)) {
-            $insert_query = "INSERT INTO tbl_transaksi (keranjang_id, transaksi_id, tgl_wktu_transaksi, pelanggan_id, produk_id, jumlah_item, total_harga_m, total_harga, pengguna) 
-                             VALUES('{$keranjang['keranjang_id']}', '$transaksi_id', '$tgl_wktu_transaksi', '$pelanggan_id', '{$keranjang['produk_id']}', '{$keranjang['jumlah_item']}', '{$keranjang['total_harga_m']}', '{$keranjang['total_harga']}', '$pengguna')";
-            
+            $insert_query = "INSERT INTO tbl_transaksi (keranjang_id, transaksi_id, tgl_wktu_transaksi, pelanggan_id, produk_id, jumlah_item, total_harga_m, total_harga, total_bayar, kembalian, diskon, pengguna) 
+                             VALUES('{$keranjang['keranjang_id']}', '$transaksi_id', '$tgl_wktu_transaksi', '$pelanggan_id', '{$keranjang['produk_id']}', '{$keranjang['jumlah_item']}', '{$keranjang['total_harga_m']}', '{$keranjang['total_harga']}', '$total_bayar', '$kembalian', '$diskon', '$pengguna')";
+
             if (!mysqli_query($config, $insert_query)) {
                 throw new Exception("Error inserting transaction: " . mysqli_error($config));
             }
@@ -387,8 +428,7 @@ if (isset($_POST["submit_it"])) {
         echo '<script>alert("Penjualan berhasil disimpan."); window.location="penjualan.php";</script>';
     } catch (Exception $e) {
         mysqli_rollback($config);
-        echo '<script>alert("'.$e->getMessage().'"); window.location="penjualan_insert.php";</script>';
+        echo '<script>alert("' . $e->getMessage() . '"); window.location="penjualan_insert.php";</script>';
     }
 }
-
 ?>
