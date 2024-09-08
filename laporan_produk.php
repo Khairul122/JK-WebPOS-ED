@@ -4,40 +4,42 @@
 include 'config.php';
 $tgl = date("d/m/Y");
 session_start();
-if ($_SESSION["pengguna_id"] == NULL) {
+
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION["pengguna_id"])) {
     echo '<script>alert("Login Dulu");window.location="login.php"</script>';
+    exit(); // Pastikan script berhenti jika pengguna belum login
 }
 
+// Ambil data pengaturan dari database
 $data = mysqli_query($config, "SELECT * FROM tbl_pengaturan");
-$row = mysqli_fetch_array($data); {
+if ($row = mysqli_fetch_array($data)) {
     $pengaturan_id = $row["pengaturan_id"];
     $pengaturan_nama_sidebar = $row["pengaturan_nama_sidebar"];
     $pengaturan_nama_navbar = $row["pengaturan_nama_navbar"];
     $pengaturan_alamat = $row["pengaturan_alamat"];
     $pengaturan_no_hp = $row["pengaturan_no_hp"];
 }
-$data2 = mysqli_query($config, "SELECT * FROM tbl_pengguna WHERE pengguna_id='$_SESSION[pengguna_id]' ");
-$row1 = mysqli_fetch_array($data2); {
 
+// Ambil data pengguna dari database
+$data2 = mysqli_query($config, "SELECT * FROM tbl_pengguna WHERE pengguna_id='$_SESSION[pengguna_id]'");
+if ($row1 = mysqli_fetch_array($data2)) {
     $pengguna_id = $row1["pengguna_id"];
-    $pengguna_nama    = $row1["pengguna_nama"];
+    $pengguna_nama = $row1["pengguna_nama"];
     $username = $row1["username"];
-    $password    = $row1["password"];
-    $pengguna_pilihan    = $row1["pengguna_pilihan"];
+    $password = $row1["password"];
+    $pengguna_pilihan = $row1["pengguna_pilihan"];
 }
-
 
 ?>
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Minimarkert Sehati</title>
+    <title>Minimarket Sehati</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -45,35 +47,25 @@ $row1 = mysqli_fetch_array($data2); {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
 </head>
 
 <body onload="window.print()">
 
-    <!-- Page Wrapper -->
-    <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
-        <!-- Main Content -->
         <div id="content">
-
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
             <div class="container-fluid">
-                <!-- DataTales Example -->
                 <h3 class="text-center font-weight-bold">
-                    <?= $pengaturan_nama_navbar ?>
+                    <?= htmlspecialchars($pengaturan_nama_navbar) ?>
                 </h3>
                 <h6 class="text-center m-0">
-                    Alamat: <?= $pengaturan_alamat ?>
+                    Alamat: <?= htmlspecialchars($pengaturan_alamat) ?>
                 </h6>
                 <h6 class="text-center m-0">
-                    HP : <?= $pengaturan_no_hp ?>
+                    HP : <?= htmlspecialchars($pengaturan_no_hp) ?>
                 </h6>
                 <hr>
-                <h5 class="text-center">Laporan Penjualan Barang</h5>
-                <center><b class="mb-3">Tanggal : <?= date("d/m/Y") ?></b></center>
+                <h5 class="text-center">Laporan Produk</h5>
+                <center><b class="mb-3">Tanggal : <?= $tgl ?></b></center>
                 <br>
                 <div class="table-responsive">
                     <table class="table table-bordered" width="100%" cellspacing="0">
@@ -87,38 +79,40 @@ $row1 = mysqli_fetch_array($data2); {
                                 <th>Harga Jual</th>
                                 <th>Stok Produk</th>
                             </tr>
-                            <?php
-                            $no = 1;
-                            $data3 = mysqli_query($config, "SELECT * FROM tbl_produk ");
-                            while ($row3 = mysqli_fetch_array($data3)) {
-                                $produk_id = $row3["produk_id"];
-                                $produk_kategori = $row3["produk_kategori"];
-                                $produk_nama = $row3["produk_nama"];
-                                $produk_merek = $row3["produk_merek"];
-                                $produk_stok = $row3["produk_stok"];
-                                $produk_harga_modal = $row3["produk_harga_modal"];
-                                $produk_harga_jual = $row3["produk_harga_jual"];
-                                $produk_satuan = $row3["produk_satuan"];
-                                echo
-                                "
-                                            <tr>
-                                                <td>$no</td>
-                                                <td>$produk_id</td>
-                                                <td>$produk_merek, $produk_nama</td>
-                                                <td>$produk_satuan</td>
-                                                <td>$produk_harga_modal</td>
-                                                <td>$produk_harga_jual</td>
-                                                <td>$produk_stok</td>
-                                            </tr>
-                                            ";
-                                $no++;
-                            }
-                            ?>
                         </thead>
                         <tbody>
+                            <?php
+                            $no = 1;
+                            $data3 = mysqli_query($config, "SELECT * FROM tbl_produk");
+                            if(mysqli_num_rows($data3) > 0) {
+                                while ($row3 = mysqli_fetch_array($data3)) {
+                                    $produk_id = $row3["produk_id"];
+                                    $produk_kategori = $row3["produk_kategori"];
+                                    $produk_nama = $row3["produk_nama"];
+                                    $produk_merek = $row3["produk_merek"];
+                                    $produk_stok = $row3["produk_stok"];
+                                    $produk_harga_modal = $row3["produk_harga_modal"];
+                                    $produk_harga_jual = $row3["produk_harga_jual"];
+                                    $produk_satuan = $row3["produk_satuan"];
+                                    echo "
+                                    <tr>
+                                        <td>$no</td>
+                                        <td>$produk_id</td>
+                                        <td>$produk_merek, $produk_nama</td>
+                                        <td>$produk_satuan</td>
+                                        <td>$produk_harga_modal</td>
+                                        <td>$produk_harga_jual</td>
+                                        <td>$produk_stok</td>
+                                    </tr>
+                                    ";
+                                    $no++;
+                                }
+                            } else {
+                                echo "<tr><td colspan='7' class='text-center'>Tidak ada data produk</td></tr>";
+                            }
+                            ?>
                         </tbody>
                     </table>
-
                 </div>
 
                 <table style="width: 100%; text-align:center">
@@ -126,45 +120,12 @@ $row1 = mysqli_fetch_array($data2); {
                         <td style="width: 80%;"></td>
                         <td>
                             Ps. Baru, <?= $tgl ?>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
+                            <br><br><br><br><br>
                             Admin
                         </td>
                     </tr>
                 </table>
 
-            </div>
-            <!-- /.container-fluid -->
-
-        </div>
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-        <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
             </div>
         </div>
     </div>
