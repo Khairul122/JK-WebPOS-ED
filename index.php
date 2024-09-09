@@ -183,58 +183,69 @@ $penggunaData = mysqli_fetch_assoc($pengguna);
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                    </div>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-                        <?php
-                        function displayCard($title, $dateFormat, $query, $iconClass)
-                        {
-                            global $config;
-                            $date = date($dateFormat);
-                            $result = mysqli_query($config, $query);
-                            if (!$result) {
-                                die('Query Error: ' . mysqli_error($config)); // Tambahan pengecekan error
-                            }
-                            $data = mysqli_fetch_assoc($result);
-                            $total = $data['total'] ?? "Belum Ada Barang Terjual";
-                            $formattedTotal = is_numeric($total) ? number_format($total, 0) : $total;
-                            echo "
-                                <div class='col-xl-3 col-md-6 mb-4'>
-                                    <div class='card border-left-primary shadow h-100 py-2'>
-                                        <div class='card-body'>
-                                            <div class='row no-gutters align-items-center'>
-                                                <div class='col mr-2'>
-                                                    <div class='text-xs font-weight-bold text-primary text-uppercase mb-1'>
-                                                        $title</div>
-                                                    <div class='h5 mb-0 font-weight-bold text-gray-800'>Rp. $formattedTotal</div>
-                                                </div>
-                                                <div class='col-auto'>
-                                                    <i class='fas $iconClass fa-2x text-gray-300'></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+    <!-- Content Row -->
+    <div class="row">
+        <?php
+        function displayCard($title, $dateFormat, $query, $iconClass, $isCurrency = true)
+        {
+            global $config;
+            $date = date($dateFormat);
+            $result = mysqli_query($config, $query);
+            if (!$result) {
+                die('Query Error: ' . mysqli_error($config));
+            }
+            $data = mysqli_fetch_assoc($result);
+            $total = $data['total'] ?? "Belum Ada Barang Terjual";
+            $formattedTotal = is_numeric($total) ? number_format($total, 0) : $total;
+
+            // Jika $isCurrency adalah true, tambahkan "Rp" untuk format mata uang, jika tidak tampilkan angka biasa
+            $displayTotal = $isCurrency ? "Rp. $formattedTotal" : $formattedTotal;
+
+            echo "
+                <div class='col-xl-3 col-md-6 mb-4'>
+                    <div class='card border-left-primary shadow h-100 py-2'>
+                        <div class='card-body'>
+                            <div class='row no-gutters align-items-center'>
+                                <div class='col mr-2'>
+                                    <div class='text-xs font-weight-bold text-primary text-uppercase mb-1'>
+                                        $title</div>
+                                    <div class='h5 mb-0 font-weight-bold text-gray-800'>$displayTotal</div>
                                 </div>
-                            ";
-                        }
-
-                        displayCard('Total Pendapatan Penjualan Hari Ini', 'Y-m-d', "SELECT SUM(total_harga) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y-m-d") . "%'", 'fa-dollar-sign');
-                        displayCard('Total Pendapatan Penjualan Bulan Ini', 'Y-m', "SELECT SUM(total_harga) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '" . date("Y-m") . "%'", 'fa-dollar-sign');
-                        displayCard('Total Pendapatan Penjualan Tahun Ini', 'Y', "SELECT SUM(total_harga) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y") . "%'", 'fa-dollar-sign');
-                        displayCard('Total Keuntungan Penjualan Hari Ini', 'Y-m-d', "SELECT SUM(total_harga - total_harga_m) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '" . date("Y-m-d") . "%'", 'fa-dollar-sign');
-                        displayCard('Total Keuntungan Penjualan Bulan Ini', 'm/Y', "SELECT SUM(total_harga - total_harga_m) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y-m") . "%'", 'fa-dollar-sign');
-                        displayCard('Total Keuntungan Penjualan Tahun Ini', 'Y', "SELECT SUM(total_harga - total_harga_m) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y") . "%'", 'fa-dollar-sign');
-                        displayCard('Total Produk Terjual Hari Ini', 'd/m/Y', "SELECT SUM(jumlah_item) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y-m-d") . "%'", 'fa-box');
-                        displayCard('Total Produk Terjual Bulan Ini', 'm/Y', "SELECT SUM(jumlah_item) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y-m") . "%'", 'fa-box');
-                        displayCard('Total Produk Terjual Tahun Ini', 'Y', "SELECT SUM(jumlah_item) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y") . "%'", 'fa-box');
-                        ?>
+                                <div class='col-auto'>
+                                    <i class='fas $iconClass fa-2x text-gray-300'></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- End of Content Row -->
                 </div>
+            ";
+        }
+
+        displayCard('Total Pendapatan Penjualan Hari Ini', 'Y-m-d', "SELECT SUM(total_harga) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y-m-d") . "%'", 'fa-dollar-sign');
+        displayCard('Total Pendapatan Penjualan Bulan Ini', 'Y-m', "SELECT SUM(total_harga) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '" . date("Y-m") . "%'", 'fa-dollar-sign');
+        displayCard('Total Pendapatan Penjualan Tahun Ini', 'Y', "SELECT SUM(total_harga) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y") . "%'", 'fa-dollar-sign');
+        displayCard('Total Keuntungan Penjualan Hari Ini', 'Y-m-d', "SELECT SUM(total_harga - total_harga_m) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '" . date("Y-m-d") . "%'", 'fa-dollar-sign');
+        displayCard('Total Keuntungan Penjualan Bulan Ini', 'm/Y', "SELECT SUM(total_harga - total_harga_m) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y-m") . "%'", 'fa-dollar-sign');
+        displayCard('Total Keuntungan Penjualan Tahun Ini', 'Y', "SELECT SUM(total_harga - total_harga_m) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y") . "%'", 'fa-dollar-sign');
+        displayCard('Total Produk Terjual Hari Ini', 'd/m/Y', "SELECT SUM(jumlah_item) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y-m-d") . "%'", 'fa-box', false);
+        displayCard('Total Produk Terjual Bulan Ini', 'm/Y', "SELECT SUM(jumlah_item) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y-m") . "%'", 'fa-box', false);
+        ?>
+    </div>
+
+    <!-- Content Row for "Total Produk Terjual Tahun Ini" -->
+    <div class="row">
+        <?php
+        // Untuk kartu produk terjual tanpa format "Rp."
+        displayCard('Total Produk Terjual Tahun Ini', 'Y', "SELECT SUM(jumlah_item) AS total FROM tbl_transaksi WHERE tgl_wktu_transaksi LIKE '%" . date("Y") . "%'", 'fa-box', false);
+        ?>
+    </div>
+</div>
+
                 <!-- End of Main Content -->
             </div>
             <!-- End of Content Wrapper -->
