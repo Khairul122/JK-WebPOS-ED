@@ -47,7 +47,17 @@ if (isset($_POST['nama'])) {
                 <h6 class="text-center m-0">HP : <?= $pengaturan['pengaturan_no_hp'] ?></h6>
                 <hr>
                 <h5 class="text-center mb-3">Laporan Penjualan Perbulan</h5>
+                <?php
+                if (isset($_POST["bulan_pilih"])) {
+                    // Mengambil bulan dan tahun dari input bulan
+                    $bulan_pilih = date("Y-m", strtotime($_POST["bulan_pilih"]));
 
+                    // Menampilkan bulan dan tahun dalam format "Bulan Tahun" (misalnya: "September 2023")
+                    $nama_bulan_tahun = date("F Y", strtotime($_POST["bulan_pilih"]));
+
+                    echo "<h6 class='text-center'>$nama_bulan_tahun</h6>";
+                }
+                ?>
                 <?php
                 // if (!empty($nama_input)) {
                 //     echo "<h6 class='text-center'>Nama: $nama_input</h6>";
@@ -59,10 +69,11 @@ if (isset($_POST['nama'])) {
                 }
 
                 $queryConditions = "";
-                if (isset($_POST["pilih_tanggal"])) {
-                    $tanggal_pilih = date("Y-m-d", strtotime($_POST["tanggal_pilih"]));
-                    $queryConditions = "WHERE DATE(tgl_wktu_transaksi) = '$tanggal_pilih'";
+                if (isset($_POST["bulan_pilih"])) {
+                    $bulan_pilih = date("Y-m", strtotime($_POST["bulan_pilih"]));
+                    $queryConditions = "WHERE DATE_FORMAT(tgl_wktu_transaksi, '%Y-%m') = '$bulan_pilih'";
                 }
+
 
                 $data3 = mysqli_query($config, "SELECT DISTINCT transaksi_id, tgl_wktu_transaksi, pelanggan_id, pengguna, SUM(jumlah_item) AS jumlah_item, SUM(total_harga) AS total_harga FROM tbl_transaksi $queryConditions GROUP BY transaksi_id, tgl_wktu_transaksi, pelanggan_id, pengguna");
 
@@ -84,12 +95,12 @@ if (isset($_POST['nama'])) {
                             </tr>
                         </thead>
                         <tbody>';
-                
+
                 $no = 1;
                 while ($row3 = mysqli_fetch_assoc($data3)) {
                     $pelanggan = mysqli_fetch_assoc(mysqli_query($config, "SELECT * FROM tbl_pelanggan WHERE pelanggan_id='{$row3['pelanggan_id']}'"));
                     $total_harga = number_format($row3["total_harga"], 0);
-                    
+
                     echo "
                     <tr>
                         <td>$no</td>
@@ -149,4 +160,5 @@ if (isset($_POST['nama'])) {
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="js/demo/datatables-demo.js"></script>
 </body>
+
 </html>
