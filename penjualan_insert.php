@@ -3,6 +3,7 @@
 <?php
 include 'config.php';
 session_start();
+error_reporting(0);
 
 if (!isset($_SESSION["pengguna_id"])) {
     echo '<script>alert("Login Dulu");window.location="login.php"</script>';
@@ -181,12 +182,17 @@ $pengguna_nama = $pengguna["pengguna_nama"];
                                 <div class="form-group">
                                     <label>Nama Produk</label>
                                     <div class="row-fluid">
-                                    <select style="background-color: black!important;" class="selectpicker form-control" name="produk_id" data-show-subtext="true" data-live-search="true">
+                                        <select style="background-color: black!important;" class="selectpicker form-control" name="produk_id" data-show-subtext="true" data-live-search="true">
                                             <option value="-">Pilih Id Produk</option>
                                             <?php
                                             $produk_query = mysqli_query($config, "SELECT * FROM tbl_produk");
                                             while ($produk = mysqli_fetch_array($produk_query)) {
-                                                echo "<option value='" . htmlspecialchars($produk['produk_id']) . "'>Id Produk : " . htmlspecialchars($produk['produk_id']) . " | Nama Produk: " . htmlspecialchars($produk['produk_merek']) . " " . htmlspecialchars($produk['produk_nama']) . " | Stok : " . htmlspecialchars($produk['produk_stok']) . " | Harga : " . htmlspecialchars($produk['produk_harga_jual']) . "</option>";
+                                                
+                                                $warna_stok = $produk['produk_stok'] < 10 ? "color: red;" : ""; 
+                                                $tanda_stok = $produk['produk_stok'] < 10 ? " (Harap Restok Produk)" : ""; 
+                                                echo "<option value='" . htmlspecialchars($produk['produk_id']) . "' style='" . $warna_stok . "'>
+                                                Id Produk: " . htmlspecialchars($produk['produk_id']) . " | Nama Produk: " . htmlspecialchars($produk['produk_merek']) . " " . htmlspecialchars($produk['produk_nama']) . " | Stok: " . htmlspecialchars($produk['produk_stok']) . " | Harga: " . htmlspecialchars($produk['produk_harga_jual']) . $tanda_stok . "
+                                            </option>";
                                             }
                                             ?>
                                         </select>
@@ -299,7 +305,9 @@ $pengguna_nama = $pengguna["pengguna_nama"];
                     $.ajax({
                         url: "get_pelanggan.php",
                         method: "POST",
-                        data: { pelanggan_no_hp: pelanggan_no_hp },
+                        data: {
+                            pelanggan_no_hp: pelanggan_no_hp
+                        },
                         success: function(data) {
                             if (data !== '') {
                                 $('#pelanggan_nama').val(data);
@@ -343,13 +351,13 @@ if (isset($_POST["submit_it"])) {
     $transaksi_id = mysqli_real_escape_string($config, $_POST["transaksi_id"]);
     $tgl_wktu_transaksi = date("Y-m-d H:i:s");
     $pelanggan_no_hp = mysqli_real_escape_string($config, $_POST["pelanggan_no_hp"]);
-    
+
     // Query untuk mendapatkan ID pelanggan berdasarkan nomor HP
     $query_pelanggan = "SELECT pelanggan_id FROM tbl_pelanggan WHERE pelanggan_no_hp='$pelanggan_no_hp' LIMIT 1";
     $result_pelanggan = mysqli_query($config, $query_pelanggan);
     $pelanggan_data = mysqli_fetch_assoc($result_pelanggan);
     $pelanggan_id = $pelanggan_data['pelanggan_id'];
-    
+
     $total_bayar = mysqli_real_escape_string($config, $_POST["total_bayar"]);
     $pengguna = $pengguna_nama;  // Menambahkan nilai untuk kolom pengguna
 

@@ -1,65 +1,58 @@
-# [Start Bootstrap - SB Admin 2](https://startbootstrap.com/theme/sb-admin-2/)
+# Minimarket Sehati
 
-[SB Admin 2](https://startbootstrap.com/theme/sb-admin-2/) is an open source admin dashboard theme for [Bootstrap](https://getbootstrap.com/) created by [Start Bootstrap](https://startbootstrap.com/).
+Proyek ini adalah sistem manajemen minimarket sederhana yang dikembangkan menggunakan teknologi berbasis web. Sistem ini mencakup fitur-fitur untuk pengelolaan stok barang, transaksi penjualan, dan laporan penjualan.
 
-For the legacy Bootstrap 3 version of this theme, you can view the [last stable release](https://github.com/StartBootstrap/startbootstrap-sb-admin-2/releases/tag/v3.3.7%2B1) of SB Admin 2 for Bootstrap 3.
+## Struktur Folder dan File
 
-## Preview
+- **database/**
+  - `sehati.sql`: File SQL yang berisi struktur dan data awal untuk database sistem minimarket ini.
 
-[![SB Admin 2 Preview](https://assets.startbootstrap.com/img/screenshots/themes/sb-admin-2.png)](https://startbootstrap.github.io/startbootstrap-sb-admin-2/)
+- **dokumentasi/**
+  - `ERD Minimarket Sehati.png`: Diagram Relasi Entitas (ERD) yang menggambarkan hubungan antar tabel dalam database.
 
-**[Launch Live Preview](https://startbootstrap.github.io/startbootstrap-sb-admin-2/)**
+- **folder_gambar/**
+  - Menyimpan gambar yang digunakan dalam aplikasi, seperti logo, ikon, atau gambar barang.
 
-## Status
+- **vendor/**  
+  - Menyimpan file library eksternal yang dibutuhkan oleh aplikasi (misalnya `font-awesome`, `jquery`).
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/StartBootstrap/startbootstrap-sb-admin-2/master/LICENSE)
-[![npm version](https://img.shields.io/npm/v/startbootstrap-sb-admin-2.svg)](https://www.npmjs.com/package/startbootstrap-sb-admin-2)
-[![Build Status](https://travis-ci.org/StartBootstrap/startbootstrap-sb-admin-2.svg?branch=master)](https://travis-ci.org/StartBootstrap/startbootstrap-sb-admin-2)
-[![dependencies Status](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2/status.svg)](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2)
-[![devDependencies Status](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2/dev-status.svg)](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2?type=dev)
+- **index.php**: Halaman utama dari aplikasi minimarket ini.
+- **koneksi.php**: File konfigurasi koneksi ke database.
+- **README.md**: Dokumentasi proyek (file ini).
 
-## Download and Installation
+## Instalasi
 
-To begin using this template, choose one of the following options to get started:
+1. Clone atau unduh proyek ini.
+2. Impor database `sehati.sql` ke MySQL.
+3. Konfigurasi file `koneksi.php` sesuai dengan pengaturan server database Anda.
+4. Jalankan aplikasi dengan membuka `index.php` di server lokal atau web server yang mendukung PHP.
 
-* [Download the latest release on Start Bootstrap](https://startbootstrap.com/theme/sb-admin-2/)
-* Install via npm: `npm i startbootstrap-sb-admin-2`
-* Clone the repo: `git clone https://github.com/StartBootstrap/startbootstrap-sb-admin-2.git`
-* [Fork, Clone, or Download on GitHub](https://github.com/StartBootstrap/startbootstrap-sb-admin-2)
+## Fitur
 
-## Usage
+- **Pengelolaan Stok Barang**: Tambah, edit, hapus, dan pantau ketersediaan barang di minimarket.
+- **Transaksi Penjualan**: Pencatatan transaksi penjualan dan penghitungan total belanja.
+- **Laporan Penjualan**: Menyediakan laporan penjualan berdasarkan periode waktu tertentu.
 
-After installation, run `npm install` and then run `npm start` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
+## Persyaratan Sistem
 
-### Gulp Tasks
+- PHP 7.x atau lebih baru
+- MySQL 5.x atau lebih baru
+- Web server seperti Apache atau Nginx
 
-* `gulp` the default task that builds everything
-* `gulp watch` browserSync opens the project in your default browser and live reloads when changes are made
-* `gulp css` compiles SCSS files into CSS and minifies the compiled CSS
-* `gulp js` minifies the themes JS file
-* `gulp vendor` copies dependencies from node_modules to the vendor directory
+## Penggunaan
 
-You must have npm installed globally in order to use this build environment. This theme was built using node v11.6.0 and the Gulp CLI v2.0.1. If Gulp is not running properly after running `npm install`, you may need to update node and/or the Gulp CLI locally.
+1. Import database dengan menjalankan `sehati.sql` di MySQL.
+2. Buka aplikasi dengan mengakses `index.php` melalui browser web.
 
-## Bugs and Issues
+## Struktur Database
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/StartBootstrap/startbootstrap-sb-admin-2/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](https://startbootstrap.com/theme/sb-admin-2/).
+Lihat `ERD Minimarket Sehati.png` dalam folder `dokumentasi` untuk memahami struktur database yang digunakan dalam proyek ini.
 
-## About
+## Kontribusi
 
-Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
+Jika ingin berkontribusi dalam proyek ini, harap lakukan fork terlebih dahulu dan buat pull request setelah perubahan dilakukan.
 
-* <https://startbootstrap.com>
-* <https://twitter.com/SBootstrap>
+## Lisensi
 
-Start Bootstrap was created by and is maintained by **[David Miller](https://davidmiller.io/)**.
+Proyek ini dilisensikan di bawah [MIT License](LICENSE).
 
-* <https://davidmiller.io>
-* <https://twitter.com/davidmillerhere>
-* <https://github.com/davidtmiller>
-
-Start Bootstrap is based on the [Bootstrap](https://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
-
-## Copyright and License
-
-Copyright 2013-2021 Start Bootstrap LLC. Code released under the [MIT](https://github.com/StartBootstrap/startbootstrap-resume/blob/master/LICENSE) license.

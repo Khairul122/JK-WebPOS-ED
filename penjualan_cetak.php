@@ -3,6 +3,7 @@
 <?php
 include 'config.php';
 session_start();
+error_reporting(0);
 
 // Cek apakah pengguna sudah login
 if (!isset($_SESSION["pengguna_id"])) {

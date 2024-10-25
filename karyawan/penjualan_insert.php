@@ -4,7 +4,7 @@
 
 include '../config.php';
 session_start();
-
+error_reporting(0);
 if (!isset($_SESSION["pengguna_id"])) {
     echo '<script>alert("Login Dulu");window.location="../login.php"</script>';
     exit;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-
+error_reporting(0);
 include '../config.php';
 session_start();
 if ($_SESSION["pengguna_id"] == NULL) {
